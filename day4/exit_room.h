@@ -55,7 +55,7 @@ void move_player(char cmd)
 
 			else {
 					player_ypos = old_ypos;
-					player_xpos = ols_xpos;
+					player_xpos = old_xpos;
 			}		
 			break;
 		case 5:

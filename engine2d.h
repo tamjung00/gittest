@@ -49,7 +49,7 @@ void map_printCell(int rawdata)
 			printf("A");
 			break;
 		case 4 :
-			printf("m";
+			printf("m");
 			break;
 		case 5:
 			printf("k");
