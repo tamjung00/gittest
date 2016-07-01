@@ -38,30 +38,32 @@ void move_player(char cmd)
 	switch(buffer_map[player_xpos + player_ypos*8 ] ) {
 		
 		case 1://벽
-		player_ypos = old_ypos;
-		player_xpos = old_xpos;
-		
-		break;
+			player_ypos = old_ypos;
+			player_xpos = old_xpos;
+			break;
 		case 0://공간
-		break;
+			break;
 		case 2://문
-		printf("미션 클리어 \r\n");
-		nFSM = 2;
-		break;
+			printf("미션 클리어 \r\n");
+			nFSM = 2;
+			break;
 		case 4:
 			if (player_inven ==1) {
 				printf("미션클리어 \r\n");
 				nFSM = 2;
 		}
 
-		else {
-			player_ypos = old_ypos;
-			player_xpos = ols_xpos;
-	}		
-		break;
+			else {
+					player_ypos = old_ypos;
+					player_xpos = ols_xpos;
+			}		
+			break;
 		case 5:
 			printf("키를 얻었습니다. \r\n");
 			player_inven = 1;
+
+			break;
+	}
 			
 	
 	buffer_map[player_xpos + player_ypos*8]= 3;

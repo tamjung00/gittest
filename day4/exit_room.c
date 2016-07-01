@@ -28,7 +28,6 @@ int world_map[] = {
 int game_version = 1;
 char *game_name = "방탈출 게임";
 
-int player_inven : //0없음,1:키보유
 
 int main()
 {
@@ -66,11 +65,13 @@ int main()
 					nFSM =1;
 					player_ypos = 5;
 					player_xpos = 1;
+					player_inven =0;
 					printf("게임을 시작합니다.");
 					break;
 				case 'x':
 					bLoop = 0;
 					printf("bye \r\n");
+					break;
 			}
 		}
 		else if(nFSM ==1 ) { //게임 플레이 중일때..
