@@ -1,7 +1,7 @@
 #ifndef __EXIT_ROOM_H__
 #define __EXIT_ROOM_H__
 
-int buffer_map[64];
+int buffer_map[100];
 
 //0 준비
 //1 게임 플레이
