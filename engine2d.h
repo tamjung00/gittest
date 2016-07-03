@@ -40,19 +40,27 @@ void map_printCell(int rawdata)
 			printf(" ");
 			break;
 		case 1: //벽
-			printf("#");
+			setColor(31,40);
+			printf("-");
 			break;
-		case 2: //문 
+		case 2: //열린문 
 			printf("M");
 			break;
-		case 3:
+		case 3: //player
+			setColor(33,40);
 			printf("A");
 			break;
-		case 4 :
+		case 4 ://잠긴문
+			setColor(32,40);
 			printf("m");
 			break;
-		case 5:
+		case 5: //열쇠
+			setColor(34,40);
 			printf("k");
+			break;
+		case 6: 
+			setColor(31,40);
+			printf("|");
 			break;
 		default:
 			printf(" ");
@@ -65,9 +73,9 @@ void map_drawAll(int *pMap)
 {
 	int ix,iy;
 
-	for(iy=0;iy<8;iy++) {
-		for(ix=0;ix<8;ix++) {
-			map_printCell(pMap[ix+iy*8]);
+	for(iy=0;iy<10;iy++) {
+		for(ix=0;ix<10;ix++) {
+			map_printCell(pMap[ix+iy*10]);
 		}
 		printf("\r\n");
 	}

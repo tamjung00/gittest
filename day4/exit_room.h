@@ -35,7 +35,7 @@ void move_player(char cmd)
 					
 	}
 		
-	switch(buffer_map[player_xpos + player_ypos*8 ] ) {
+	switch(buffer_map[player_xpos + player_ypos*10 ] ) {
 		
 		case 1://벽
 			player_ypos = old_ypos;
@@ -66,7 +66,7 @@ void move_player(char cmd)
 	}
 			
 	
-	buffer_map[player_xpos + player_ypos*8]= 3;
+	buffer_map[player_xpos + player_ypos*10]= 3;
 
 }
 
