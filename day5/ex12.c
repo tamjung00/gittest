@@ -20,7 +20,7 @@ int main()
 		switch(cmd) {
 			case 'a' ://add
 			printf("what : ");
-			scanf("%c",cmd);
+			scanf("%c",&cmd);
 			getchar();
 			buffer[nTailIndex] = cmd;
 			nTailIndex++;
