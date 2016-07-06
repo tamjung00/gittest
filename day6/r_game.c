@@ -38,7 +38,7 @@ int main()
 	car_posx = 3;
 
 	rock_pos_y = 0;
-	rock_pos_x = rock_pos_table [rock_cur_table_index];
+	rock_pos_x = rock_pos_table [ rock_cur_table_index ];
 	
 	while(bLoop) {
 
