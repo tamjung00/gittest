@@ -3,6 +3,20 @@
 #include <string.h>
 #include "myeditor.h"
 
+typedef struct {
+	char *m_szToken;
+	void (*m_fp)(char *ptr);
+} _S_PROC_OBJECT
+
+void me_exit()
+{
+	bLoop =0;
+}
+
+void me_push()
+{
+	pTemp = strtok(NULL)
+
 int main()
 {
 	puts("myeditor version 1.0");
