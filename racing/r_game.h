@@ -4,6 +4,7 @@
 void drawGame(
 int mx,int my,char *pBuf)
 {
+
 	//랜더링
 	gotoxy(1,1);
 	int x,y;
@@ -17,6 +18,7 @@ int mx,int my,char *pBuf)
 				case 1:
 					putchar('#');
 					break;
+								
 				case 2:
 					putchar('A');
 					break;
