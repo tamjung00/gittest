@@ -17,10 +17,22 @@ int main()
 		"dungeon-1",
 		NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
 	};
+	_S_AREA camp = {
+		"camp",
+		NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+	};
+	_S_AREA forest = {
+		"forest",
+		NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+	};
 
 	town.node[0] = &dungeon_1;
 	dungeon_1.node[0] = &town;
-
+	town.node[0] = &camp;
+	camp.node[0] = &town;
+	town.node[0] = &forest;
+	forest.node[0] = &town;
+	
 	_S_AREA *pCurrentArea = &town;
 
 	int bLoop = 1;
