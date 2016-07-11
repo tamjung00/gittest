@@ -23,9 +23,19 @@ int bLoop = 1;
 
 double rock_acc_tick1;
 int rock_pos_x1,rock_pos_y1;
-int rock_pos_table1[20] = { 3,5,7,10,1,11,19,9,16,17,18,18,9,8,4,2,9};
+int rock_pos_table1[20] = { 10,5,7,3,1,11,19,9,16,17,18,18,9,8,4,2,9};
 int rock_cur_table_index1 = 0;
-int bLoop1 = 2;
+
+double rock_acc_tick2;
+int rock_pos_x2,rock_pos_y2;
+int rock_pos_table2[20] = { 5,10,9,18,13,4,17,8,3,2,1,16,15,6,11,12,3};
+int rock_cur_table_index2 = 0;
+
+double rock_acc_tick3;
+int rock_pos_x3,rock_pos_y3;
+int rock_pos_table3[20] = { 16,2,19,15,1,8,10,12,4,9,14,3,1,6,9,18,11};
+int rock_cur_table_index3 = 0;
+
 
 int car_posx,car_posy;
 
@@ -74,16 +84,46 @@ void rg_PlayGame(double delta_tick)
 	
 			}
 			rock_acc_tick1 += delta_tick;
-
-			if(rock_acc_tick1 > 0.5) {
-				rock_acc_tick1 = 0;
+			
+			if(rock_acc_tick1 > 1) {
+				rock_acc_tick1= 0;
 				rock_pos_y1 += 1;
 				//화면끝도달...
 				if(rock_pos_y1 >= 20) {
 					rock_pos_y1 = 0;
 					rock_cur_table_index1++;
 					rock_cur_table_index1 %= 20;
-					rock_pos_x = rock_pos_table1[ rock_cur_table_index1];
+					rock_pos_x1 = rock_pos_table1[ rock_cur_table_index1];
+				
+				}
+	
+			}
+			rock_acc_tick2 += delta_tick;
+			
+			if(rock_acc_tick2 > 1.5) {
+				rock_acc_tick2= 0;
+				rock_pos_y2 += 1;
+				//화면끝도달...
+				if(rock_pos_y2 >= 20) {
+					rock_pos_y2 = 0;
+					rock_cur_table_index2++;
+					rock_cur_table_index2 %= 20;
+					rock_pos_x2 = rock_pos_table2[ rock_cur_table_index2];
+				
+				}
+	
+			}
+			rock_acc_tick3 += delta_tick;
+			
+			if(rock_acc_tick3 > 2) {
+				rock_acc_tick3= 0;
+				rock_pos_y3 += 1;
+				//화면끝도달...
+				if(rock_pos_y3 >= 20) {
+					rock_pos_y3 = 0;
+					rock_cur_table_index3++;
+					rock_cur_table_index3 %= 20;
+					rock_pos_x3 = rock_pos_table3[ rock_cur_table_index3];
 				
 				}
 	
@@ -93,6 +133,28 @@ void rg_PlayGame(double delta_tick)
 			//게임로직 (판정)
 			if(rock_pos_y == car_posy &&
 					rock_pos_x == car_posx)
+			{
+				bLoop = 0;
+				//drawGame(screen_buffer);
+				printf("game over\n");
+			}
+			
+			if(rock_pos_y1 == car_posy &&
+					rock_pos_x1 == car_posx)
+			{
+				bLoop = 0;
+				//drawGame(screen_buffer);
+				printf("game over\n");
+			}
+			if(rock_pos_y2 == car_posy &&
+					rock_pos_x2 == car_posx)
+			{
+				bLoop = 0;
+				//drawGame(screen_buffer);
+				printf("game over\n");
+			}
+			if(rock_pos_y3 == car_posy &&
+					rock_pos_x3 == car_posx)
 			{
 				bLoop = 0;
 				//drawGame(screen_buffer);
@@ -108,6 +170,10 @@ void rg_PlayGame(double delta_tick)
 			screen_buffer[ car_posy *20+ car_posx] = 2;
 			//바위 그리기 
 			screen_buffer[ rock_pos_y*20 + rock_pos_x ] = 1;
+			screen_buffer[ rock_pos_y1*20 + rock_pos_x1] =1;
+			screen_buffer[ rock_pos_y2*20 + rock_pos_x2] =1;
+			screen_buffer[ rock_pos_y3*20 + rock_pos_x3] =1;
+
 
 			acc_tick += delta_tick;
 			if(acc_tick > 0.1 || bLoop == 0 ) {
@@ -159,8 +225,12 @@ int main()
 
 	rock_pos_y = 0;
 	rock_pos_x = rock_pos_table[ rock_cur_table_index ];
-	rock_pos_y1 = 10;
+	rock_pos_y1 = 0;
 	rock_pos_x1 = rock_pos_table1[ rock_cur_table_index1 ];
+	rock_pos_y2 = 0;
+	rock_pos_x2 = rock_pos_table2[ rock_cur_table_index2 ];
+	rock_pos_y3 = 0;
+	rock_pos_x3 = rock_pos_table3[ rock_cur_table_index3 ];
 
 
 	while(bLoop) {
