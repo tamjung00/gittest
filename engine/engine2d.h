@@ -105,9 +105,11 @@ void map_printCell(int rawdata)
 	}
 
 }
+
 void map_drawAll(int *pMap)
 {
 	int ix,iy;
+
 	for(iy=0;iy<8;iy++) {
 		for(ix=0;ix<8;ix++) {
 			map_printCell(pMap[ix+iy*8]);
@@ -116,23 +118,25 @@ void map_drawAll(int *pMap)
 	}
 }
 
-void putTile(int sy,int ey,int sx,int ex, 
+
+void putTile(int sy,int ey,int sx, int ex,
 int width,
 char *ptrBuf,
 char *pchrTable
 )
-
 {
 	int ix,iy;
 
 	for(iy=sy;iy<ey;iy++) {
 		for(ix=sx;ix<ex;ix++) {
-			putchar( pchrTable[ptrBuf(iy*width)+ix] );
+			putchar(  pchrTable[ptrBuf[ (iy*width) +ix] ] );
+			
 		}
 		printf("\r\n");
+		//puts("");
 	}
 }
-
+	
 
 
 #endif
