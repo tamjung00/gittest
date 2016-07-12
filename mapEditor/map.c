@@ -3,7 +3,7 @@
 
 #include "map.h"
 
-char Tilepalette[] = {'.','#','@','/',92,'+','='};
+char Default_Tilepalete[] = {'.','#','@','/',92,'+','='};
 
 void map_init(_S_MAP_OBJECT *pObj)
 {
