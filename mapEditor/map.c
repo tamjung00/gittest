@@ -3,7 +3,21 @@
 
 #include "map.h"
 
-char Default_Tilepalete[] = {'.','#','@','/',92,'+','='};
+char Default_Tilepalete[] = {
+	'.',
+	'#',
+	'@',
+	'/',
+	92,
+	'+',
+	'=',
+	'^',
+	'>',
+	'<',
+	'|',
+	'-',
+	'*'
+};
 
 void map_init(_S_MAP_OBJECT *pObj)
 {
@@ -48,7 +62,11 @@ void map_new(_S_MAP_OBJECT *pObj,int nWidth,int nHeight)
 
 void map_PutTile(_S_MAP_OBJECT *pObj, int x,int y,int nTileIndex)
 {
-	pObj->m_pBuf[ pObj->m_header.m_nWidth * y + x  ] = nTileIndex;
+	if(x >=0 && y >=0) {
+		if(x < pObj->m_header.m_nWidth && y < pObj->m_header.m_nHeight) {
+		pObj->m_pBuf[ pObj->m_header.m_nWidth * y + x  ] = nTileIndex;
+		}
+	}
 }
 
 //0 : 성공
@@ -121,4 +139,20 @@ void map_drawTile_mirror_v(_S_MAP_OBJECT *pObj,int posx,int posy,_S_MAP_OBJECT *
 		}
 }
 
+void map_drawTile_trn(_S_MAP_OBJECT *pObj,int posx,int posy,_S_MAP_OBJECT *pTarget)
+{
+	for(int iy=0;iy<pObj->m_header.m_nHeight;iy++) {
+			for(int ix=0;ix<pObj->m_header.m_nWidth;ix++) {
+				
+				int nPixel = pObj->m_pBuf[iy*pObj->m_header.m_nWidth +ix];
+				if(nPixel != 0) {
+				 	map_PutTile(pTarget,ix + posx,iy + posy,
+					pObj->m_pBuf[iy*pObj->m_header.m_nWidth +ix]);
+			}
+		}
+	
+	}
+
+
+}
 
