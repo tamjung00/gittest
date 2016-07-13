@@ -12,9 +12,12 @@
 
 #include "bullet.h"
 
-void bullet_init(S_BULLET_OBJECT *pObj,double x,double y,double speed,_S_MAP_OBJECT *pBody)
+void bullet_init(S_BULLET_OBJECT *pObj,
+double x,double y,double speed,
+_S_MAP_OBJECT *pBody)
 {
-	pObj->m_nFSM = 0; //0:sleep,1:active
+
+	pObj->m_nFSM = 0; //0: sleep, 1: active
 	pObj->m_nStep = 0;
 	pObj->m_fSpeed = speed;
 	pObj->m_fXpos = x;
@@ -23,42 +26,42 @@ void bullet_init(S_BULLET_OBJECT *pObj,double x,double y,double speed,_S_MAP_OBJ
 
 }
 
-void bullet_apply(S_BULLET_OBJECT *pObj,double deltaTick)
+void  bullet_apply(S_BULLET_OBJECT *pObj,double deltaTick)
 {
 	switch(pObj->m_nFSM) {
 		case 0:
 		break;
 		case 1:
 		if(pObj->m_nStep == 0) {
-			
+
 			pObj->m_nStep++;
 			pObj->m_faccLifeTime = 0;
 		}
-		else { 
-			pObj->m_faccLifeTime +=deltaTick;//수명처리
+		else {
+			pObj->m_faccLifeTime += deltaTick; //수명처리 
 			if(pObj->m_faccLifeTime > pObj->m_fLifeLimit) {
 				pObj->m_nStep = 0;
 				pObj->m_nFSM = 0;
 			}
-			pObj->m_fYpos -= deltaTick *pObj->m_fSpeed;
+			pObj->m_fYpos -= deltaTick * pObj->m_fSpeed;
 		}
+
 		break;
 	}
-	
 }
 
 void bullet_draw(S_BULLET_OBJECT *pObj,_S_MAP_OBJECT *pMapBuf)
 {
-		switch(pObj->m_nFSM) {
-		case 0:
-		break;
-		case 1:
-		map_drawTile_trn(pObj->m_pBody,
-			(int)pObj->m_fXpos,
-			(int)pObj->m_fYpos.
-			pMapBuf);
-		
-		break;
+	switch(pObj->m_nFSM) {
+	case 0:
+	break;
+	case 1:
+	map_drawTile_trn(pObj->m_pBody,
+		(int)pObj->m_fXpos,
+		(int)pObj->m_fYpos,
+		pMapBuf);
+
+	break;
 	}
 }
 
@@ -70,5 +73,6 @@ void bullet_fire(S_BULLET_OBJECT *pObj,int x,int y,double speed,double lifeLimit
 	pObj->m_fYpos = (double)y;
 	pObj->m_fSpeed = speed;
 	pObj->m_fLifeLimit = lifeLimit;
-
+	
 }
+
