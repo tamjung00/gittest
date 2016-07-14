@@ -7,9 +7,21 @@ typedef struct {
 	int m_nHeight;
 }_S_MAP_HEADER;
 
-typedef struct {
+typedef struct _S_MAP_OBJECT {
 	_S_MAP_HEADER m_header;
 	char *m_pBuf;
+
+//멤버함수 정의
+	int(*fpLoad)(struct _S_MAP_OBJECT *,char *);
+	int(*fpSave)(struct _S_MAP_OBJECT *,char *);
+	void(*fpDump)(struct _S_MAP_OBJECT *,char *);
+	void(*fpNew)(struct _S_MAP_OBJECT *,int,int);
+	void(*fpPutTile)(struct _S_MAP_OBJECT *,int,int,int);
+	void(*fpDrawTile)(struct _S_MAP_OBJECT *,int,int,struct _S_MAP_OBJECT *);
+	void(*fpDrawTile_trn)(struct _S_MAP_OBJECT *,int,int,struct _S_MAP_OBJECT *);
+	void(*fpDrawTile_mirror_v)(struct _S_MAP_OBJECT *,int,int,struct _S_MAP_OBJECT *);
+	void(*fpDrawTile_mirror_h)(struct _S_MAP_OBJECT *,int,int,struct _S_MAP_OBJECT *);
+
 }_S_MAP_OBJECT;
 
 extern char Default_Tilepalete[];
