@@ -27,7 +27,7 @@ static void Apply(_S_ALIEN_OBJECT *pObj,double deltaTick)
 		break;
 		case 2: //move right
 		pObj->m_fXpos += (deltaTick *speed);
-		if(pObj->m_fXpos > 35) {//35가 화면끝	(화면끝보다 큰지)
+		if(pObj->m_fXpos > 40) {//35가 화면끝	(화면끝보다 큰지)
 			pObj->m_nFSM = 3;
 			pObj->m_nStep = 0;
 			

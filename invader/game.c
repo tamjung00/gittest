@@ -47,6 +47,7 @@ int main()
 	map_init(&gAlienModel);
 	map_load(&gAlienModel,"alien.dat");
 
+	
 	double TablePosition[] = {0,6.0};
 
 	for(int i=0;i<2;i++)

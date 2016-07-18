@@ -87,6 +87,7 @@ int main()
 			gPlayerObject.pfApply(&gPlayerObject,delta_tick,ch);
 
 		}
+			acc_guid_delay_tick += delta_tick;
 			if(acc_guid_delay_tick > 2.5)
 			{	
 				acc_guid_delay_tick = 0;
