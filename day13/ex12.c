@@ -20,14 +20,14 @@ double acc_tick,last_tick;
 int bLoop = 1;
 
 _S_MAP_OBJECT gScreenBuffer[2];
-_S_MAP_OBJECT gPlayer;
+_S_MAP_OBJECT gPlayerModel;
 _S_Plane gPlayerObject;
 _S_MAP_OBJECT gBulletModel;
 S_BULLET_OBJECT gBulletObject;
 
 //게임오브젝트 선언
 _S_Plane gPlayerPlane;
-S_BULLET_OBJECT g_bullets[32];
+_S_BULLET_OBJECT g_bullets[32];
 
 _S_MAP_OBJECT gBulletModel;
 
@@ -41,7 +41,8 @@ int main()
 	for(int i =0;i<2;i++) 
 	{
 		map_init(&gScreenBuffer[i]);
-		map_new(&gScreenBuffer[i],35,15);
+		map_new(&gScreenBuffer[i],35,25);
+		//map_new(&gScreenBuffer[i],35,15);
 	}
 
    	map_init(&gPlayer);
@@ -51,15 +52,19 @@ int main()
 	map_load(&gBulletModel,"plasma.dat");
 	bullet_init(&gBulletObject,0,0,0,&gBulletModel);
 
-	Plane_init(&gPlayerObject,&gPlayer,14,10);
-
+	Plane_init(&gPlayerObject,&gPlayerModel,14,20);
+	//Plane_init(&gPlayerObject,&gPlayer,14,10);
    int targetx,targety;
 
-	targety = 14;
 	targetx = 14;
+	targety = 21;
+	//targety = 14;
+	//targetx = 14;
 
 	int fire_x = 14;
-	int fire_y = 0;
+	int fire_y = 3;
+	//int fire_x = 14;
+	//int fire_y = 0;
 
     while(bLoop) {
 		//타이밍처리 
@@ -77,9 +82,9 @@ int main()
 			if(ch == 'q') {
 				bLoop = 0;
 				puts("bye~ \r");
-			}
+		}
          
-         else if(ch == 'j') {
+         else if(ch == 'j') { //방향벡터구하기
 				double vx,vy,c;
 				vx = targetx - fire_x;
 				vy = targety - fire_y;
@@ -91,9 +96,8 @@ int main()
 				fire_x,fire_y,
 				10.0,vx,vy,
 				10);
-			}
-            
-		    else if(ch == 'a') 
+		}
+    	  else if(ch == 'a') 
 		{
 			targetx -= 1;
 
@@ -102,15 +106,21 @@ int main()
 		{
 			targetx += 1;
 		}
-        
+		 else if(ch == 'w') 
+		{
+			targetx -= 1;
+
+		}
+		else if(ch == 's')
+		{
+			targetx += 1;
+		}        
 		
 
         gPlayerObject.fpApply(&gPlayerObject,delta_tick,ch);
  }
         
-    
-       
-        bullet_apply(&gBulletObject,delta_tick);
+    bullet_apply(&gBulletObject,delta_tick);
         
          //타이밍 계산 
 		acc_tick += delta_tick;
@@ -126,12 +136,11 @@ int main()
            
             gotoxy(0,0);
 			
-        
-            map_dump(&gScreenBuffer[1],Default_Tilepalete);
+        	 map_dump(&gScreenBuffer[1],Default_Tilepalete);
 		
 
-			puts("move : w,a,s,d \r");
-			puts("quit : q \r");
+			//puts("move : w,a,s,d \r");
+			//puts("quit : q \r");
 			
 			acc_tick = 0;
 		}
