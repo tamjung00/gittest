@@ -31,7 +31,7 @@ _S_BULLET_OBJECT gBulletObject[32];
 _S_ALIEN_OBJECT gAlienObjects[8];
 _S_BULLET_OBJECT gMissileObject[32];
 
-//충돌
+//충돌-에일리언 총알에 비행기가 맞을때
 double getDistance_1(_S_BULLET_OBJECT *pBullet,_S_Plane *pPlane)
 	{
 		double bullet_pos_x = pBullet->m_fXpos;
@@ -45,7 +45,7 @@ double getDistance_1(_S_BULLET_OBJECT *pBullet,_S_Plane *pPlane)
 		double dist = sqrt(vx*vx+vy*vy);
 		return dist;
 	}
-
+//충돌-에일리언이 비행기 총알에 맞을때
 double getDistance_2(_S_BULLET_OBJECT *pMissile,_S_ALIEN_OBJECT *pAlien)
 	{
 		double bullet_pos_x = pMissile->m_fXpos;
@@ -85,21 +85,21 @@ int main()
 
 	gPlayerObject.m_nFSM = 1;
 	
-//에일리언 총알
+//에일리언 총알 init
 	for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 	{
 		bullet_init(&gBulletObject[i],0,0,0,&gBulletModel);
 		
 	}
 
-//비행기 총알
+//비행기 총알 init
 	for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 	{
 		bullet_init(&gMissileObject[i],0,0,0,&gMissileModel);
 		
 	}
 
-//에일리언 위치
+//에일리언 갯수와 위치
 	double TablePosition[] = {0,6.0,30.0,13.0};
 
 	for(int i=0;i<4;i++)
@@ -181,7 +181,7 @@ int main()
 			pObj->pfApply(pObj,delta_tick);
 		}		
 	
-	//에일리언총알에 비행기가 맞을때
+	//충돌-에일리언총알에 비행기가 맞을때
 		for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{
 			_S_BULLET_OBJECT *pObj = &gBulletObject[i];
@@ -199,7 +199,7 @@ int main()
 
 			}
 		}
-	//에일리언이 비행기 총알에 맞을때
+	//충돌-에일리언이 비행기 총알에 맞을때
 		for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{
 			_S_BULLET_OBJECT *pObj = &gMissileObject[i];
