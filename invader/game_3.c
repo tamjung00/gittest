@@ -24,11 +24,14 @@ _S_MAP_OBJECT gScreenBuf[2];
 _S_MAP_OBJECT gPlayerModel;
 _S_MAP_OBJECT gBulletModel;
 _S_MAP_OBJECT gAlienModel;
+_S_MAP_OBJECT gMissileModel;
 
 _S_Plane gPlayerObject;
 _S_BULLET_OBJECT gBulletObject[32];
 _S_ALIEN_OBJECT gAlienObjects[8];
+_S_BULLET_OBJECT gMissileObject[32];
 
+//충돌
 double getDistance(_S_BULLET_OBJECT *pBullet,_S_Plane *pPlane)
 	{
 		double bullet_pos_x = pBullet->m_fXpos;
@@ -61,21 +64,32 @@ int main()
 	map_init(&gAlienModel);
 	map_load(&gAlienModel,"alien.dat");
 
+	map_init(&gMissileModel);
+	map_load(&gMissileModel,"missile.dat");
+
 	Plane_init(&gPlayerObject,&gPlayerModel,20,22);
 
 	gPlayerObject.m_nFSM = 1;
 	
-
+//에일리언 총알
 	for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 	{
 		bullet_init(&gBulletObject[i],0,0,0,&gBulletModel);
 		
 	}
 
+//비행기 총알
+	for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
+	{
+		bullet_init(&gMissileObject[i],0,0,0,&gMissileModel);
+		
+	}
+
+//에일리언 위치
 	double TablePosition[] = {0,6.0,30.0,13.0};
 
 	for(int i=0;i<4;i++)
-	{//에일리언위치
+	{
 	
 		_S_ALIEN_OBJECT *pObj = &gAlienObjects[i];
 		alien_init(pObj,&gAlienModel);
@@ -109,25 +123,37 @@ int main()
 				bLoop = 0;
 				puts("bye~ \r");
 			} 
-		
+			else if(ch=='j') {
+				for(int i=0;i<sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT);i++) {
+					_S_BULLET_OBJECT *pObj = &gMissileObject[i];
+					if(pObj->m_nFSM == 0) { //슬립상태라면....
+						bullet_fire(pObj,
+								gPlayerObject.m_nXpos,
+								gPlayerObject.m_nYpos,10,5.0);
+						break;
+					}
+				}
+			}		
+		//비행기apply
 			gPlayerObject.pfApply(&gPlayerObject,delta_tick,ch);
 		}
 			
-			
+	//에일리언총알 apply	
 		for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{	
 			_S_BULLET_OBJECT *pObj = &gBulletObject[i];
 			pObj->pfApply(pObj,delta_tick);
 		}	
 
-
+	//에일리언apply
 		for(int i=0;i<4;i++)
 	
 		{		
 			_S_ALIEN_OBJECT *pObj = &gAlienObjects[i];
 			pObj->pfApply(pObj,delta_tick);
 		}		
-
+	
+	//에일리언총알과 비행기 충돌
 		for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{
 			_S_BULLET_OBJECT *pObj = &gBulletObject[i];
@@ -152,15 +178,17 @@ int main()
 			
             gotoxy(0,0);
 			map_drawTile(&gScreenBuf[0],0,0,&gScreenBuf[1]);
-			gPlayerObject.pfDraw(&gPlayerObject,&gScreenBuf[1]);
-			
+			gPlayerObject.pfDraw(&gPlayerObject,&gScreenBuf[1]); //비행기draw
+
+		//에일리언 draw	
             for(int i=0;i<4;i++)	
 			{
 				_S_ALIEN_OBJECT *pObj = &gAlienObjects[i];
 				pObj->pfDraw(pObj,&gScreenBuf[1]);
 
 			}
-
+		
+		//에일리언 총알 draw
 			for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 			{	
 				_S_BULLET_OBJECT *pObj = &gBulletObject[i];
