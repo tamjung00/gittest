@@ -157,15 +157,21 @@ int main()
 					vy=c;
 					*/
 					if(pObj->m_nFSM == 0) { //슬립상태라면....
-						gMissileObject[i].pfFire(pObj,gPlayerObject.m_fXpos,gPlayerObject.m_fYpos,10,10,5.0,5.0);
+						gMissileObject[i].pfFire(pObj,gPlayerObject.m_fXpos,gPlayerObject.m_fYpos,
+						10,0,-1,5.0);
 						break;
 					}
 				}
 			}		
-		//비행기apply
+	//비행기apply
 			gPlayerObject.pfApply(&gPlayerObject,delta_tick,ch);
 		}
-			
+	//비행기총알 apply
+		for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
+		{	
+			_S_BULLET_OBJECT *pObj = &gMissileObject[i];
+			pObj->pfApply(pObj,delta_tick);
+		}	
 	//에일리언총알 apply	
 		for(int i=0;i< sizeof(gBulletObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{	
@@ -208,7 +214,7 @@ int main()
 				
 				double dist = getDistance_2(pObj,&gAlienObjects[i]); 
 
-				if(dist < 0.25) {  
+				if(dist < 2.0) {  
 					gAlienObjects[i].m_nFSM = 0;
 					
 					//printf("---------------GAME OVER----------------\r\n");
