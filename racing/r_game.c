@@ -86,7 +86,7 @@ void rg_PlayGame(double delta_tick)
 			rock_acc_tick1 += delta_tick;
 			
 			if(rock_acc_tick1 > 1) {
-				rock_acc_tick1= 0;
+				rock_acc_tick1= 0;a
 				rock_pos_y1 += 1;
 				//화면끝도달...
 				if(rock_pos_y1 >= 20) {
