@@ -78,7 +78,7 @@ double getDistance_3(_S_FISH_OBJECT *pFish,_S_Plane *pPlane)
 	}
 int main()
 {
-	//srand((float)time(NULL)); //랜덤 함수
+	srand((float)time(NULL)); //랜덤 함수
 	
 	for(int i=0;i<2;i++)
 	{
@@ -90,7 +90,7 @@ int main()
 	map_load(&gPlayerModel,"plane3.dat");
 
 	map_init(&gBulletModel);
-	map_load(&gBulletModel,"plasma.dat");
+	map_load(&gBulletModel,"plasma1.dat");
 
 	map_init(&gAlienModel);
 	map_load(&gAlienModel,"alien1.dat");
@@ -99,7 +99,7 @@ int main()
 	map_load(&gMissileModel,"missile.dat");
 
 	map_init(&gFishModel);
-	map_load(&gFishModel,"fish.dat");
+	map_load(&gFishModel,"fish1.dat");
 
 //비행기 init
 	Plane_init(&gPlayerObject,&gPlayerModel,20,22);
@@ -135,9 +135,9 @@ int main()
 		gAlienObjects[i].m_pBullet = &gBulletObject[i];
 	}
 //물고기 init
-	double TablePosition2[] = {3,15.0,22.0,30.0};
+	double TablePosition2[] = {10.0,28.0};
 	
-	for(int i=0;i<4;i++) 
+	for(int i=0;i<2;i++) 
 	{
 		_S_FISH_OBJECT *pObj = &gFishObject[i];
 		Fish_init(pObj,&gFishModel);
@@ -219,7 +219,7 @@ int main()
 		}	
 	
 	//물고기 apply	
-	for(int i=0;i<4;i++)
+	for(int i=0;i<2;i++)
 	
 		{		
 			_S_FISH_OBJECT *pObj = &gFishObject[i];
@@ -253,7 +253,7 @@ int main()
 				
 				double dist = getDistance_2(pObj,&gAlienObjects[i]); 
 
-				if(dist < 2.0) {  
+				if(dist < 3.0) {  
 					gAlienObjects[i].m_nFSM = 0;
 					
 					//printf("---------------GAME OVER----------------\r\n");
@@ -263,7 +263,7 @@ int main()
 			}
 		}
 	//충돌-물고기에 비행기가 맞을때
-		for(int i=0;i<4;i++)
+		for(int i=0;i<2;i++)
 		{
 			_S_FISH_OBJECT *pObj = &gFishObject[i];
 			
@@ -311,7 +311,7 @@ int main()
 					pObj->pfDraw(pObj,&gScreenBuf[1]);
 			}
 		//물고기 draw
-			 for(int i=0;i<4;i++)	
+			 for(int i=0;i<2;i++)	
 			{
 				_S_FISH_OBJECT *pObj = &gFishObject[i];
 				pObj->pfDraw(pObj,&gScreenBuf[1]);
