@@ -16,7 +16,8 @@ char Default_Tilepalete[] = {
 	'<', //9
 	'|', //10
 	'-', //11
-	'*' //12
+	'*', //12
+	'v' //13
 };
 
 void map_init(_S_MAP_OBJECT *pObj)
