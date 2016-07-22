@@ -143,18 +143,21 @@ int main()
 	}
 
 //물고기 init
-	double TablePosition2[] = {10.0,28.0};
-
-	for(int i=0;i<2;i++) 
+	//srand(time(NULL));
+	double TablePosition2[] = {6.0,19.0,31.0};
+	//double TablePosition3[] = {5.0,15.0};
+	
+	for(int i=0;i<3;i++) 
 	{
 		_S_FISH_OBJECT *pObj = &gFishObject[i];
 		Fish_init(pObj,&gFishModel);
-		pObj->m_fXpos = TablePosition2[i];//rand() % 30; //랜덤값을 불러온다
+		pObj->m_fXpos = TablePosition2[i]; //rand() % 20; 랜덤값을 불러온다
 		pObj->m_fYpos = 2;
 		pObj->m_nFSM = 2;
-
+		
 		
 	}
+	
 
 	set_conio_terminal_mode();
 	acc_tick=last_tick=0;
@@ -216,7 +219,7 @@ int main()
 		}	
 	
 	//물고기 apply	
-	for(int i=0;i<2;i++)
+	for(int i=0;i<3;i++)
 	
 		{		
 			_S_FISH_OBJECT *pObj = &gFishObject[i];
@@ -251,8 +254,9 @@ int main()
 				
 					double dist = getDistance_2(pObj,&gAlienObjects[i]); 
 		
-						if(dist < 3.0) {  
+						if(dist < 4.0) {  
 							gAlienObjects[i].m_nFSM = 0;	
+							//printf("---------------GAME WIN----------------\r\n");
 				}
 			}
 		}
@@ -307,7 +311,7 @@ int main()
 					pObj->pfDraw(pObj,&gScreenBuf[1]);
 			}
 		//물고기 draw
-			 for(int i=0;i<2;i++)	
+			 for(int i=0;i<3;i++)	
 			{
 				_S_FISH_OBJECT *pObj = &gFishObject[i];
 				pObj->pfDraw(pObj,&gScreenBuf[1]);
@@ -317,7 +321,6 @@ int main()
 			map_dump(&gScreenBuf[1],Default_Tilepalete);
 			
 			puts("move : w,a,s,d \r");
-			puts("bullet : j \r");
 			puts("quit : q \r");
 			
 			acc_tick = 0;

@@ -15,7 +15,6 @@
 static void Apply(_S_FISH_OBJECT *pObj,double deltaTick)
 {
 	double speed = 2.5;
-	
 	switch(pObj->m_nFSM) {
 
 		case 0: //die
@@ -25,12 +24,15 @@ static void Apply(_S_FISH_OBJECT *pObj,double deltaTick)
 			break;
 		case 2: //move 
 			pObj->m_fYpos += (deltaTick *speed);
-            if(pObj->m_fYpos >25) {
+		
+			   if(pObj->m_fYpos >25) {
 			   pObj->m_fYpos =0;
 			   pObj->m_nFSM = 2;
 		}
+	
 		
 		break;
+		
 		
 	}
 }
