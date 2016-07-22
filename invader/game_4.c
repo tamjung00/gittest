@@ -36,49 +36,56 @@ _S_FISH_OBJECT gFishObject[8];
 
 //충돌-에일리언 총알에 비행기가 맞을때
 double getDistance_1(_S_BULLET_OBJECT *pBullet,_S_Plane *pPlane)
-	{
-		double bullet_pos_x = pBullet->m_fXpos;
-		double bullet_pos_y = pBullet->m_fYpos;
+{
+	double bullet_pos_x = pBullet->m_fXpos;
+	double bullet_pos_y = pBullet->m_fYpos;
 				
-		double target_pos_x = gPlayerObject.m_fXpos;
-		double target_pos_y = gPlayerObject.m_fYpos;
+	double target_pos_x = gPlayerObject.m_fXpos;
+	double target_pos_y = gPlayerObject.m_fYpos;
 
-		double vx = target_pos_x - bullet_pos_x;
-		double vy = target_pos_y - bullet_pos_y;
-		double dist = sqrt(vx*vx+vy*vy);
-		return dist;
-	}
+	double vx = target_pos_x - bullet_pos_x;
+	double vy = target_pos_y - bullet_pos_y;
+	double dist = sqrt(vx*vx+vy*vy);
+	
+	return dist;
+}
+
 //충돌-에일리언이 비행기 총알에 맞을때
 double getDistance_2(_S_BULLET_OBJECT *pMissile,_S_ALIEN_OBJECT *pAlien)
-	{
-		double bullet_pos_x = pMissile->m_fXpos;
-		double bullet_pos_y = pMissile->m_fYpos;
+{
+	double bullet_pos_x = pMissile->m_fXpos;
+	double bullet_pos_y = pMissile->m_fYpos;
 				
-		double target_pos_x = pAlien->m_fXpos;
-		double target_pos_y = pAlien->m_fYpos;
+	double target_pos_x = pAlien->m_fXpos;
+	double target_pos_y = pAlien->m_fYpos;
 
-		double vx = target_pos_x - bullet_pos_x;
-		double vy = target_pos_y - bullet_pos_y;
-		double dist = sqrt(vx*vx+vy*vy);
-		return dist;
-	}
+	double vx = target_pos_x - bullet_pos_x;
+	double vy = target_pos_y - bullet_pos_y;
+	double dist = sqrt(vx*vx+vy*vy);
+	
+	return dist;
+}
+
 //충돌-물고기에 비행기가 맞을때
 double getDistance_3(_S_FISH_OBJECT *pFish,_S_Plane *pPlane)
-	{
-		double bullet_pos_x = pFish->m_fXpos;
-		double bullet_pos_y = pFish->m_fYpos;
+{
+	double bullet_pos_x = pFish->m_fXpos;
+	double bullet_pos_y = pFish->m_fYpos;
 				
-		double target_pos_x = gPlayerObject.m_fXpos;
-		double target_pos_y = gPlayerObject.m_fYpos;
+	double target_pos_x = gPlayerObject.m_fXpos;
+	double target_pos_y = gPlayerObject.m_fYpos;
 
-		double vx = target_pos_x - bullet_pos_x;
-		double vy = target_pos_y - bullet_pos_y;
-		double dist = sqrt(vx*vx+vy*vy);
-		return dist;
-	}
+	double vx = target_pos_x - bullet_pos_x;
+	double vy = target_pos_y - bullet_pos_y;
+	double dist = sqrt(vx*vx+vy*vy);
+	
+	return dist;
+}
+
+
 int main()
 {
-	srand((float)time(NULL)); //랜덤 함수
+	//srand((float)time(NULL)); //랜덤 함수
 	
 	for(int i=0;i<2;i++)
 	{
@@ -134,9 +141,10 @@ int main()
 		
 		gAlienObjects[i].m_pBullet = &gBulletObject[i];
 	}
+
 //물고기 init
 	double TablePosition2[] = {10.0,28.0};
-	
+
 	for(int i=0;i<2;i++) 
 	{
 		_S_FISH_OBJECT *pObj = &gFishObject[i];
@@ -144,6 +152,8 @@ int main()
 		pObj->m_fXpos = TablePosition2[i];//rand() % 30; //랜덤값을 불러온다
 		pObj->m_fYpos = 2;
 		pObj->m_nFSM = 2;
+
+		
 	}
 
 	set_conio_terminal_mode();
@@ -153,15 +163,7 @@ int main()
 
 //플레이상태로 만들기
 	gPlayerObject.m_nFSM = 1;
-	/*
-	int targetx,targety,firex,firey;
 
-	targetx = gAlienObjects[8].m_fXpos;
-	targety = gAlienObjects[8].m_fYpos;
-
-	firex = gPlayerObject.m_fXpos;
-	firey = gPlayerObject.m_fYpos;
-	*/
 	while(bLoop) {
 		//타이밍처리 
 		clock_gettime(CLOCK_MONOTONIC,&work_timer);
@@ -179,24 +181,19 @@ int main()
 			else if(ch=='j') {
 				for(int i=0;i<sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT);i++) {
 					_S_BULLET_OBJECT *pObj = &gMissileObject[i];
-					/*
-					double vx,vy,c;
-					vx = targetx-firex;
-					vy = target-firey;
-					c=sqrt(vx*vx+vy*vy);
-					vx/=c;	
-					vy=c;
-					*/
-					if(pObj->m_nFSM == 0) { //슬립상태라면....
-						gMissileObject[i].pfFire(pObj,gPlayerObject.m_fXpos,gPlayerObject.m_fYpos,
-						10,0,-1,5.0);
-						break;
+					
+						if(pObj->m_nFSM == 0) { //슬립상태라면....
+							gMissileObject[i].pfFire(pObj,gPlayerObject.m_fXpos,gPlayerObject.m_fYpos,
+							10,0,-1,5.0);
+							break;
 					}
 				}
 			}		
+	
 	//비행기apply
 			gPlayerObject.pfApply(&gPlayerObject,delta_tick,ch);
 		}
+	
 	//비행기총알 apply
 		for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{	
@@ -231,55 +228,54 @@ int main()
 		{
 			_S_BULLET_OBJECT *pObj = &gBulletObject[i];
 			
-			if(pObj->m_nFSM != 0) {
+				if(pObj->m_nFSM != 0) {
 				
-				double dist = getDistance_1(pObj,&gPlayerObject); 
+					double dist = getDistance_1(pObj,&gPlayerObject); 
 
-				if(dist < 0.25) {  
-					pObj->m_nFSM = 0;
-					gPlayerObject.m_nFSM = 0;
-					printf("---------------GAME OVER----------------\r\n");
-					bLoop = 0;
+						if(dist < 0.25) {  
+							pObj->m_nFSM = 0;
+							gPlayerObject.m_nFSM = 0;
+							printf("---------------GAME OVER----------------\r\n");
+							bLoop = 0;
 				}
 
 			}
 		}
+	
 	//충돌-에일리언이 비행기 총알에 맞을때
 		for(int i=0;i< sizeof(gMissileObject)/sizeof(_S_BULLET_OBJECT) ;i++)
 		{
 			_S_BULLET_OBJECT *pObj = &gMissileObject[i];
 			
-			if(pObj->m_nFSM != 0) {
+				if(pObj->m_nFSM != 0) {
 				
-				double dist = getDistance_2(pObj,&gAlienObjects[i]); 
-
-				if(dist < 3.0) {  
-					gAlienObjects[i].m_nFSM = 0;
-					
-					//printf("---------------GAME OVER----------------\r\n");
-					//bLoop = 0;
+					double dist = getDistance_2(pObj,&gAlienObjects[i]); 
+		
+						if(dist < 3.0) {  
+							gAlienObjects[i].m_nFSM = 0;	
 				}
-
 			}
 		}
+	
 	//충돌-물고기에 비행기가 맞을때
 		for(int i=0;i<2;i++)
 		{
 			_S_FISH_OBJECT *pObj = &gFishObject[i];
 			
-			if(pObj->m_nFSM != 0) {
+				if(pObj->m_nFSM != 0) {
 				
-				double dist = getDistance_3(pObj,&gPlayerObject); 
+					double dist = getDistance_3(pObj,&gPlayerObject); 
 
-				if(dist < 1.0) {  
-					//pObj->m_nFSM = 0;
-					gPlayerObject.m_nFSM = 0;
-					printf("---------------GAME OVER----------------\r\n");
-					bLoop = 0;
+						if(dist < 1.0) {  
+							//pObj->m_nFSM = 0;
+							gPlayerObject.m_nFSM = 0;
+							printf("---------------GAME OVER----------------\r\n");
+							bLoop = 0;
 				}
 
 			}
 		}
+		
 		//타이밍 계산 
 		acc_tick += delta_tick;
 		if(acc_tick > 0.1) {
@@ -319,6 +315,11 @@ int main()
 			}
 	
 			map_dump(&gScreenBuf[1],Default_Tilepalete);
+			
+			puts("move : w,a,s,d \r");
+			puts("bullet : j \r");
+			puts("quit : q \r");
+			
 			acc_tick = 0;
 		}
 
